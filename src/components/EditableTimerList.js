@@ -3,18 +3,22 @@ import EditableTimer from './EditableTimer';
 
 class EditableTimerList extends React.Component {
   render() {
-    return(
+    const timerList = this.props.timers.map((timer) => {
+      return (
+        <EditableTimer 
+        title={timer.title}
+        project={timer.project}
+        id={timer.id}
+        elapsed={timer.elapsed}
+        runningSince={timer.runningSince}
+        key={timer.id}
+        />
+      );
+    })
+
+    return (
       <div>
-        <EditableTimer 
-        edit={true}
-        title='Example Title'
-        project='Example project'
-        />
-        <EditableTimer 
-        edit={false}
-        title='Example2'
-        project='Examples'
-        />
+        {timerList}
       </div>
     );
   }

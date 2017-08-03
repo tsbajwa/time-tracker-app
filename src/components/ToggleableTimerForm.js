@@ -3,8 +3,11 @@ import TimerForm from './TimerForm';
 import toggleIcon from '../assets/toggle.png';
 
 class ToggleableTimerForm extends React.Component {
+  state = {
+    toggle: false,
+  }
   render() {
-    if(this.props.toggle) {
+    if (this.state.toggle) {
       return (
         <TimerForm 
         btnText='Create'

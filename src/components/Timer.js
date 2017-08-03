@@ -12,7 +12,7 @@ class Timer extends React.Component {
           <p>{this.props.project}</p>
         </div>
         <div className='timer__time'>
-         Timer: 9:34:23
+         Timer: {this.props.elapsed}
         </div>
         <div className='timer__editOptions'>
          <img src={edit} alt='Edit timer' />
