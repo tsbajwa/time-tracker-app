@@ -7,7 +7,9 @@ class TimerDashBoard extends React.Component {
     return (
     <div>
       <EditableTimerList />
-      <ToggleableTimerForm />
+      <ToggleableTimerForm 
+        toggle={false}
+      />
     </div>
     );
   }

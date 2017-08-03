@@ -7,8 +7,14 @@ class EditableTimerList extends React.Component {
       <div>
         <EditableTimer 
         edit={true}
+        title='Example Title'
+        project='Example project'
         />
-        <EditableTimer />
+        <EditableTimer 
+        edit={false}
+        title='Example2'
+        project='Examples'
+        />
       </div>
     );
   }
