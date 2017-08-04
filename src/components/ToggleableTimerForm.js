@@ -6,17 +6,25 @@ class ToggleableTimerForm extends React.Component {
   state = {
     toggle: false,
   }
+
+  handleToggle = () => {
+    this.setState((prevState) => ({ toggle: !prevState.toggle }))
+  }
+
   render() {
     if (this.state.toggle) {
       return (
         <TimerForm 
         btnText='Create'
+        handleUpdate={this.props.handleUpdate}
+        toggleState={this.handleToggle}
+
         />
       );
     } else {
       return (
         <div>
-          <img src={toggleIcon} alt="Add timer" />
+          <img src={toggleIcon} onClick={this.handleToggle} alt="Add timer" />
         </div>
       )
     }
@@ -24,3 +32,5 @@ class ToggleableTimerForm extends React.Component {
 }
 
 export default ToggleableTimerForm;
+
+

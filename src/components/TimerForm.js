@@ -15,7 +15,20 @@ class TimerForm extends React.Component {
     this.setState({ project: e.target.value })
   }
 
+  handleUpdateClick = (e) => {
+    e.preventDefault()
+    this.props.handleUpdate(this.state.title, this.state.project, this.props.id);
+    // TODO:Will i need to toggle state(toggle and edit) or rerender will occur and take care of that
+  }
+  // TODO: Check - Don't need to change state, as it should rerender with defaults?
+  handleCancelClick = (e) => {
+    e.preventDefault()
+    //this.setState({title: this.props.title || '', project: this.props.project || ''} )
+    this.props.toggleState()
+  }
+
   render() {
+    const btnValue = this.props.title ? 'Update' : 'Create'
     return (
       <div>
         <div>
@@ -26,10 +39,12 @@ class TimerForm extends React.Component {
         </div>
         <div>
           <Button 
-          btnText= {this.props.btnText || 'Update'}
+          btnText= {btnValue}
+          onClick={this.handleUpdateClick}
           />
           <Button 
           btnText='Cancel'
+          onClick={this.handleCancelClick}
           />
         </div>
       </div>

@@ -15,8 +15,8 @@ class Timer extends React.Component {
          Timer: {this.props.elapsed}
         </div>
         <div className='timer__editOptions'>
-         <img src={edit} alt='Edit timer' />
-         <img src={del} alt='Delete Timer' />
+         <img src={edit} onClick={this.props.toggleState} alt='Edit timer' />
+         <img src={del} onClick={this.props.delete} alt='Delete Timer' />
         </div>
           <Button 
           btnText='Start/Stop'

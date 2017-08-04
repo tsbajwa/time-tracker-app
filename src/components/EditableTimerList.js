@@ -11,7 +11,9 @@ class EditableTimerList extends React.Component {
         id={timer.id}
         elapsed={timer.elapsed}
         runningSince={timer.runningSince}
+        handleUpdate={this.props.handleUpdate}
         key={timer.id}
+        delete={this.props.delete}
         />
       );
     })
