@@ -29,7 +29,6 @@ class TimerDashBoard extends React.Component {
     if (title === '' && project === '') {
       return
     }
-
     const updatedTimers = this.state.timers.map((timer) => {
       if (timer.id === id) {
         return Object.assign({}, timer,{title, project})
@@ -40,16 +39,22 @@ class TimerDashBoard extends React.Component {
     this.setState({timers: updatedTimers})
   }
 
-  handleDelete = () => {
-    console.log('delete function')
+  handleDelete = (id) => {
+    let updatedTimers = this.state.timers;
+    for (let i = 0; i < this.state.timers.length; i++) {
+      if (this.state.timers[i].id === id) {
+        updatedTimers.splice(i,1)
+      }
+    }
+    this.setState({ timers: updatedTimers })
   }
 
   handleCreate = (title, project) => {
     if (title === '' && project === '') {
       return;
     }
-    const newTimer = [{title, project, id: title, elapsed: 0, runningSince: null}];
-    const updatedTimers = this.state.timers.concat(newTimer);
+    const newTimer = {title, project, id: title, elapsed: 0, runningSince: null};
+    const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers:updatedTimers });
   }
 
@@ -62,7 +67,6 @@ class TimerDashBoard extends React.Component {
         delete={this.handleDelete}
       />
       <ToggleableTimerForm 
-        toggle={false}
         create={this.handleCreate}
       />
     </div>
