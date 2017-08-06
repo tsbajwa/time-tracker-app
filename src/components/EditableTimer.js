@@ -31,6 +31,7 @@ class EditableTimer extends React.Component {
         id={this.props.id}
         toggleState={this.handleToggle}
         delete={this.props.delete}
+        toggleTimer={this.props.toggleTimer}
         />
       );
     }

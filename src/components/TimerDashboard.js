@@ -23,6 +23,11 @@ class TimerDashBoard extends React.Component {
     ],
   }
   
+  handleToggleTimer = () => {
+    console.log('Start button presed')
+  }
+
+
   handleUpdate = (title, project, id) => {
     // TODO:  If strings empty, reverts to default value. Is there better functionailty/result we want?
     if (title === '' && project === '') {
@@ -35,7 +40,7 @@ class TimerDashBoard extends React.Component {
         return timer
       }
     })
-    this.setState({timers: updatedTimers})
+    this.setState({ timers: updatedTimers })
   }
 
   handleDelete = (id) => {
@@ -64,6 +69,7 @@ class TimerDashBoard extends React.Component {
         timers={this.state.timers}
         handleUpdate={this.handleUpdate}
         delete={this.handleDelete}
+        toggleTimer={this.handleToggleTimer}
       />
       <ToggleableTimerForm 
         create={this.handleCreate}

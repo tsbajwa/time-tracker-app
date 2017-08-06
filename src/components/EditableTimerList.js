@@ -14,6 +14,7 @@ class EditableTimerList extends React.Component {
         handleUpdate={this.props.handleUpdate}
         key={timer.id}
         delete={this.props.delete}
+        toggleTimer={this.props.toggleTimer}
         />
       );
     })
