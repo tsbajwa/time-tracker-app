@@ -4,13 +4,6 @@ import edit from '../assets/edit.png';
 import del from '../assets/del.png';
 
 class Timer extends React.Component {
-
-  handleDeleteClick = (e) => {
-    e.preventDefault();
-    this.props.delete(this.props.id)
-    //this.props.toggleState
-  }
-
   render() {
     return (
       <div className='timer'>
@@ -23,7 +16,7 @@ class Timer extends React.Component {
         </div>
         <div className='timer__editOptions'>
          <img src={edit} onClick={this.props.toggleState} alt='Edit timer' />
-         <img src={del} onClick={this.handleDeleteClick} alt='Delete Timer' />
+         <img src={del} onClick={() => this.props.delete(this.props.id)} alt='Delete Timer' />
         </div>
           <Button 
           btnText='Start/Stop'
