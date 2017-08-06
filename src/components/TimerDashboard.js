@@ -23,17 +23,34 @@ class TimerDashBoard extends React.Component {
       },
     ],
   }
-  // For handleUpdate, if its being created, there is no id (undefined), if being updated there is an id
-  //If no Title or project put what do we do? If only one, the other(undefined, make it empty string?)
-  //Arrow functions dont have access to array.argument? or wtva it is i think so keep that in mind
+  
   handleUpdate = (title, project, id) => {
-    console.log(title)
-    console.log(project)
-    console.log(id)
+    // TODO:  If strings empty, reverts to default value. Is there better functionailty/result we want?
+    if (title === '' && project === '') {
+      return
+    }
+
+    const updatedTimers = this.state.timers.map((timer) => {
+      if (timer.id === id) {
+        return Object.assign({}, timer,{title, project})
+      } else {
+        return timer
+      }
+    })
+    this.setState({timers: updatedTimers})
   }
 
   handleDelete = () => {
     console.log('delete function')
+  }
+
+  handleCreate = (title, project) => {
+    if (title === '' && project === '') {
+      return;
+    }
+    const newTimer = [{title, project, id: title, elapsed: 0, runningSince: null}];
+    const updatedTimers = this.state.timers.concat(newTimer);
+    this.setState({ timers:updatedTimers });
   }
 
   render() {
@@ -46,7 +63,7 @@ class TimerDashBoard extends React.Component {
       />
       <ToggleableTimerForm 
         toggle={false}
-        handleUpdate={this.handleUpdate}
+        create={this.handleCreate}
       />
     </div>
     );

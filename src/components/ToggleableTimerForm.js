@@ -16,7 +16,7 @@ class ToggleableTimerForm extends React.Component {
       return (
         <TimerForm 
         btnText='Create'
-        handleUpdate={this.props.handleUpdate}
+        create={this.props.create} //TODO: Change to create function
         toggleState={this.handleToggle}
 
         />
