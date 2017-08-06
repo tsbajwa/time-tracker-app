@@ -1,8 +1,7 @@
 import React from 'react'
 import EditableTimerList from './EditableTimerList';
 import ToggleableTimerForm from './ToggleableTimerForm';
-
-//TODO:  Use uuid library to generate ids
+import { uuid } from '../util/helpers';
 
 class TimerDashBoard extends React.Component {
   state = {
@@ -10,14 +9,14 @@ class TimerDashBoard extends React.Component {
       {
         title: 'Practice squat',
         project: 'Gym Chores',
-        id: 12,
+        id: uuid(),
         elapsed: 5456099,
         runningSince: Date.now(),
       }, 
       {
         title: 'Bake squash',
         project: 'Kitchen Chores',
-        id: 15,
+        id: uuid(),
         elapsed: 1273998,
         runningSince: null,
       },
@@ -48,12 +47,12 @@ class TimerDashBoard extends React.Component {
     }
     this.setState({ timers: updatedTimers })
   }
-
+  
   handleCreate = (title, project) => {
     if (title === '' && project === '') {
       return;
     }
-    const newTimer = {title, project, id: title, elapsed: 0, runningSince: null};
+    const newTimer = {title, project, id: uuid(), elapsed: 0, runningSince: null};
     const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers:updatedTimers });
   }
