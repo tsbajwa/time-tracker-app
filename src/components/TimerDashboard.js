@@ -1,8 +1,7 @@
 import React from 'react'
 import EditableTimerList from './EditableTimerList';
 import ToggleableTimerForm from './ToggleableTimerForm';
-import { uuid } from '../util/helpers';
-
+import { uuid, findArrayPosition } from '../util/helpers';
 class TimerDashBoard extends React.Component {
   state = {
     timers: [
@@ -11,7 +10,7 @@ class TimerDashBoard extends React.Component {
         project: 'Gym Chores',
         id: uuid(),
         elapsed: 5456099,
-        runningSince: Date.now(),
+        runningSince: null,
       }, 
       {
         title: 'Bake squash',
@@ -23,8 +22,17 @@ class TimerDashBoard extends React.Component {
     ],
   }
   
-  handleToggleTimer = () => {
-    console.log('Start button presed')
+  handleToggleTimer = (id) => {
+      let position = findArrayPosition(id, this.state.timers)
+      let updatedTimers = [...this.state.timers]
+      updatedTimers[position].runningSince = Date.now();
+      this.setState({ timers: updatedTimers })
+
+      let runningTimer = setInterval(() => {
+        let currentTimer = [...this.state.timers]
+        currentTimer[position].elapsed = Date.now() - currentTimer[position].runningSince;
+        this.setState({timers: currentTimer }) 
+      }, 1000)
   }
 
 
@@ -40,17 +48,12 @@ class TimerDashBoard extends React.Component {
         return timer
       }
     })
-    this.setState({ timers: updatedTimers })
+    this.setState({ timers: updatedTimers });
   }
 
   handleDelete = (id) => {
-    let updatedTimers = this.state.timers;
-    for (let i = 0; i < this.state.timers.length; i++) {
-      if (this.state.timers[i].id === id) {
-        updatedTimers.splice(i,1)
-      }
-    }
-    this.setState({ timers: updatedTimers })
+    const updatedTimers = this.state.timers.filter((timer) => timer.id !== id);
+    this.setState({ timers: updatedTimers });
   }
   
   handleCreate = (title, project) => {
@@ -59,7 +62,7 @@ class TimerDashBoard extends React.Component {
     }
     const newTimer = {title, project, id: uuid(), elapsed: 0, runningSince: null};
     const updatedTimers = [...this.state.timers, newTimer]
-    this.setState({ timers:updatedTimers });
+    this.setState({ timers: updatedTimers });
   }
 
   render() {

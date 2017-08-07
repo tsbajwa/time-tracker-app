@@ -33,8 +33,8 @@ class TimerForm extends React.Component {
   }
 
   render() {
-    const btnValue = this.props.title ? 'Update' : 'Create';
-    const btnOnClick = this.props.title ? this.handleUpdateClick : this.handleCreateClick;
+    const btnValue = (this.props.title || this.props.project) ? 'Update' : 'Create';
+    const btnOnClick = (this.props.title || this.props.project) ? this.handleUpdateClick : this.handleCreateClick;
     return (
       <div>
         <div>

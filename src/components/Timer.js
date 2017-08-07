@@ -20,7 +20,7 @@ class Timer extends React.Component {
         </div>
           <Button 
           btnText='Start/Stop'
-          onClick={this.props.toggleTimer}
+          onClick={() => this.props.toggleTimer(this.props.id)}
           />
       </div>
     );
