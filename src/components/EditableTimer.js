@@ -7,10 +7,6 @@ export default class EditableTimer extends React.Component {
     edit: false,
   }
 
-  handleToggle = () => {
-    this.setState((prevState) => ({edit: !prevState.edit}))
-  }
-
   handleFormClose = () => {
     this.setState( { edit: false })
   }
