@@ -14,7 +14,7 @@ export default class EditableTimerList extends React.Component {
         onFormSubmit={this.props.onFormSubmit}
         key={timer.id}
         onClick={this.props.onClick}
-        toggleTimer={this.props.toggleTimer}
+        updateTime={this.props.updateTime}
         timerStartTime={this.props.timerStartTime}
         recordPaused={this.props.recordPaused}
         />

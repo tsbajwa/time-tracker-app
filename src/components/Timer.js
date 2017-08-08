@@ -9,16 +9,15 @@ export default class Timer extends React.Component {
     start: true,
   }
 
-  handleToggleTimerClick = (e) => {
-    e.preventDefault();
+  handleStartClick = (e) => {
     this.setState({ start: false, })
     this.props.timerStartTime(this.props.id);
-    this.toggleTimer = setInterval(this.props.toggleTimer,1000,this.props.id);
+    this.refreshTimerDOM = setInterval(this.props.updateTime,1000,this.props.id);
   }
 
-  handleStopOnClick = () => {
+  handleStopClick = () => {
     this.setState({ start: true, });
-    clearInterval(this.toggleTimer);
+    clearInterval(this.refreshTimerDOM);
     this.props.recordPaused(this.props.id);
   }
 
@@ -38,9 +37,9 @@ export default class Timer extends React.Component {
         </div>
         <DualButton
           start={this.state.start}
-          startOnClick={this.handleToggleTimerClick}
+          startOnClick={this.handleStartClick}
           startBtnText='Start'
-          stopOnClick={this.handleStopOnClick}
+          stopOnClick={this.handleStopClick}
           stopBtnText='Stop'
           />
       </div>
