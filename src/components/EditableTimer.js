@@ -42,11 +42,11 @@ export default class EditableTimer extends React.Component {
         project={this.props.project}
         elapsed={this.props.elapsed}
         id={this.props.id}
-        onFormOpen={this.handleFormOpen}
-        delete={this.props.delete}
+        iconOneClick={this.handleFormOpen}
         toggleTimer={this.props.toggleTimer}
         timerStartTime={this.props.timerStartTime}
         recordPaused={this.props.recordPaused}
+        iconTwoClick={this.props.onClick}
         />
       );
     }

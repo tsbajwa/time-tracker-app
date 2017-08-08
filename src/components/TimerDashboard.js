@@ -33,6 +33,10 @@ export default class TimerDashBoard extends React.Component {
     this.editTimer(title, proj, id);
   }
 
+  handleDeleteClick = (id) => {
+    this.deleteTimer(id)
+  }
+
   editTimer = (title, project, id) => {
     const updatedTimers = this.state.timers.map((timer) => {
       if (timer.id === id) {
@@ -67,7 +71,7 @@ export default class TimerDashBoard extends React.Component {
 
   
 
-  handleDelete = (id) => {
+  deleteTimer = (id) => {
     const updatedTimers = this.state.timers.filter((timer) => timer.id !== id);
     this.setState({ timers: updatedTimers });
   }
@@ -84,7 +88,7 @@ export default class TimerDashBoard extends React.Component {
       <EditableTimerList 
         timers={this.state.timers}
         onFormSubmit={this.handleEditFormSubmit}
-        delete={this.handleDelete}
+        onClick={this.handleDeleteClick}
         toggleTimer={this.handleToggleTimer}
         timerStartTime ={this.handleTimerStartTime}
         recordPaused={this.recordPausedTime}
