@@ -4,27 +4,34 @@ import toggleIcon from '../assets/toggle.png';
 
 class ToggleableTimerForm extends React.Component {
   state = {
-    toggle: false,
+    isFormOpen: false,
   }
 
-  handleToggle = () => {
-    this.setState((prevState) => ({ toggle: !prevState.toggle }))
+  handleFormOpen = () => {
+    this.setState({ isFormOpen: true, })
   }
 
+  handleFormClose = () => {
+    this.setState({ isFormOpen: false, })
+  }
+
+  handleFormSubmit = (title, proj) => {
+    this.handleFormClose();
+    this.props.create(title, proj);
+  }
   render() {
-    if (this.state.toggle) {
+    if (this.state.isFormOpen) {
       return (
-        <TimerForm 
+        <TimerForm
         btnText='Create'
-        create={this.props.create} //TODO: Change to create function
-        toggleState={this.handleToggle}
-
+        onFormClose={this.handleFormClose}
+        onFormSubmit={this.handleFormSubmit}
         />
       );
     } else {
       return (
         <div>
-          <img src={toggleIcon} onClick={this.handleToggle} alt="Add timer" />
+          <img src={toggleIcon} onClick={this.handleFormOpen} alt="Add timer" />
         </div>
       )
     }

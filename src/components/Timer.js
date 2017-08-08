@@ -33,7 +33,7 @@ class Timer extends React.Component {
          {msToTime(this.props.elapsed)}
         </div>
         <div className='timer__editOptions'>
-         <img src={edit} onClick={this.props.toggleState} alt='Edit timer' />
+         <img src={edit} onClick={this.props.onFormOpen} alt='Edit timer' />
          <img src={del} onClick={() => this.props.delete(this.props.id)} alt='Delete Timer' />
         </div>
         <DualButton

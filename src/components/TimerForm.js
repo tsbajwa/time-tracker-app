@@ -15,26 +15,15 @@ class TimerForm extends React.Component {
     this.setState({ project: e.target.value })
   }
 
-  handleUpdateClick = (e) => {
-    e.preventDefault();
-    this.props.handleUpdate(this.state.title, this.state.project, this.props.id);
-    this.props.toggleState();
+  handleSubmit = () => {
+    this.props.onFormSubmit(this.state.title, this.state.project, this.props.id)
+    //Use this to replace handleUpdateClick. Yet to wire up
   }
 
-  handleCreateClick = (e) => {
-    e.preventDefault();
-    this.props.create(this.state.title, this.state.project);
-    this.props.toggleState();
-  }
-
-  handleCancelClick = (e) => {
-    e.preventDefault();
-    this.props.toggleState();
-  }
 
   render() {
-    const btnValue = (this.props.title || this.props.project) ? 'Update' : 'Create';
-    const btnOnClick = (this.props.title || this.props.project) ? this.handleUpdateClick : this.handleCreateClick;
+    const btnValue = this.props.id ? 'Update' : 'Create';
+    //const btnOnClick = this.props.id ? this.handleUpdateClick : this.handleSubmit;
     return (
       <div>
         <div>
@@ -46,11 +35,11 @@ class TimerForm extends React.Component {
         <div>
           <Button 
           btnText= {btnValue}
-          onClick={btnOnClick}
+          onClick={this.handleSubmit}
           />
           <Button 
           btnText='Cancel'
-          onClick={this.handleCancelClick}
+          onClick={this.props.onFormClose}
           />
         </div>
       </div>

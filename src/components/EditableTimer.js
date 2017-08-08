@@ -11,6 +11,19 @@ class EditableTimer extends React.Component {
     this.setState((prevState) => ({edit: !prevState.edit}))
   }
 
+  handleFormClose = () => {
+    this.setState( { edit: false })
+  }
+
+  handleFormOpen = () => {
+    this.setState({ edit: true })
+  }
+
+  handleFormSubmit = (title, proj, id) => {
+    this.handleFormClose()
+    this.props.handleUpdate(title, proj, id)
+
+  }
   render() {
     if (this.state.edit) {
       return (
@@ -18,8 +31,8 @@ class EditableTimer extends React.Component {
         title={this.props.title}
         project={this.props.project}
         id={this.props.id}
-        toggleState={this.handleToggle}
-        handleUpdate={this.props.handleUpdate}
+        onFormClose={this.handleFormClose}
+        onFormSubmit={this.handleFormSubmit}
         />
       );
     } else {
@@ -29,7 +42,7 @@ class EditableTimer extends React.Component {
         project={this.props.project}
         elapsed={this.props.elapsed}
         id={this.props.id}
-        toggleState={this.handleToggle}
+        onFormOpen={this.handleFormOpen}
         delete={this.props.delete}
         toggleTimer={this.props.toggleTimer}
         timerStartTime={this.props.timerStartTime}
