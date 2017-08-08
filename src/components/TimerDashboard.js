@@ -9,35 +9,44 @@ class TimerDashBoard extends React.Component {
         title: 'Practice squat',
         project: 'Gym Chores',
         id: uuid(),
-        elapsed: 5456099,
+        elapsed: null,
         runningSince: null,
+        pausedTime: null,
       }, 
       {
         title: 'Bake squash',
         project: 'Kitchen Chores',
         id: uuid(),
-        elapsed: 1273998,
+        elapsed: null,
         runningSince: null,
+        pausedTime: null,
       },
     ],
   }
   
+  recordPausedTime = (id) => {
+    let position = findArrayPosition(id, this.state.timers);
+    let updatedTimers = [...this.state.timers]
+    updatedTimers[position].pausedTime = updatedTimers[position].elapsed;
+    this.setState({ timers: updatedTimers })
+  }
+
+  handleTimerStartTime = (id) => {
+    let position = findArrayPosition(id, this.state.timers);
+    let updatedTimers = [...this.state.timers]
+      updatedTimers[position].runningSince = Date.now();
+      this.setState({ timers: updatedTimers }) 
+  }
+
   handleToggleTimer = (id) => {
       let position = findArrayPosition(id, this.state.timers)
       let updatedTimers = [...this.state.timers]
-      updatedTimers[position].runningSince = Date.now();
+      updatedTimers[position].elapsed = updatedTimers[position].pausedTime + Date.now() - updatedTimers[position].runningSince;
       this.setState({ timers: updatedTimers })
-
-      let runningTimer = setInterval(() => {
-        let currentTimer = [...this.state.timers]
-        currentTimer[position].elapsed = Date.now() - currentTimer[position].runningSince;
-        this.setState({timers: currentTimer }) 
-      }, 1000)
   }
 
 
   handleUpdate = (title, project, id) => {
-    // TODO:  If strings empty, reverts to default value. Is there better functionailty/result we want?
     if (title === '' && project === '') {
       return
     }
@@ -60,7 +69,7 @@ class TimerDashBoard extends React.Component {
     if (title === '' && project === '') {
       return;
     }
-    const newTimer = {title, project, id: uuid(), elapsed: 0, runningSince: null};
+    const newTimer = {title, project, id: uuid(), elapsed: null, runningSince: null, pausedTime: null};
     const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers: updatedTimers });
   }
@@ -73,6 +82,8 @@ class TimerDashBoard extends React.Component {
         handleUpdate={this.handleUpdate}
         delete={this.handleDelete}
         toggleTimer={this.handleToggleTimer}
+        timerStartTime ={this.handleTimerStartTime}
+        recordPaused={this.recordPausedTime}
       />
       <ToggleableTimerForm 
         create={this.handleCreate}
