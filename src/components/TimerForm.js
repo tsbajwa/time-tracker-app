@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './Button';
 
-class TimerForm extends React.Component {
+export default class TimerForm extends React.Component {
   state = {
     title: this.props.title || '',
     project: this.props.project || '',
@@ -17,13 +17,11 @@ class TimerForm extends React.Component {
 
   handleSubmit = () => {
     this.props.onFormSubmit(this.state.title, this.state.project, this.props.id)
-    //Use this to replace handleUpdateClick. Yet to wire up
   }
 
 
   render() {
     const btnValue = this.props.id ? 'Update' : 'Create';
-    //const btnOnClick = this.props.id ? this.handleUpdateClick : this.handleSubmit;
     return (
       <div>
         <div>
@@ -46,7 +44,3 @@ class TimerForm extends React.Component {
     );
   }
 }
-
-export default TimerForm;
-
-// TODO: Change this.props.btnText to be based upon whether there is a title or not

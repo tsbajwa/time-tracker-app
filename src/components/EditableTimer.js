@@ -2,7 +2,7 @@ import React from 'react';
 import TimerForm from './TimerForm';
 import Timer from './Timer';
 
-class EditableTimer extends React.Component {
+export default class EditableTimer extends React.Component {
   state = {
     edit: false,
   }
@@ -21,7 +21,7 @@ class EditableTimer extends React.Component {
 
   handleFormSubmit = (title, proj, id) => {
     this.handleFormClose()
-    this.props.handleUpdate(title, proj, id)
+    this.props.onFormSubmit(title, proj, id)
 
   }
   render() {
@@ -52,5 +52,3 @@ class EditableTimer extends React.Component {
     }
   }
 }
-
-export default EditableTimer;

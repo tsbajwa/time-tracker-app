@@ -1,7 +1,7 @@
 import React from 'react';
 import EditableTimer from './EditableTimer';
 
-class EditableTimerList extends React.Component {
+export default class EditableTimerList extends React.Component {
   render() {
     const timerList = this.props.timers.map((timer) => {
       return (
@@ -11,7 +11,7 @@ class EditableTimerList extends React.Component {
         id={timer.id}
         elapsed={timer.elapsed}
         runningSince={timer.runningSince}
-        handleUpdate={this.props.handleUpdate}
+        onFormSubmit={this.props.onFormSubmit}
         key={timer.id}
         delete={this.props.delete}
         toggleTimer={this.props.toggleTimer}
@@ -28,5 +28,3 @@ class EditableTimerList extends React.Component {
     );
   }
 }
-
-export default EditableTimerList;

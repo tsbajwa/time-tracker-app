@@ -2,7 +2,8 @@ import React from 'react'
 import EditableTimerList from './EditableTimerList';
 import ToggleableTimerForm from './ToggleableTimerForm';
 import { uuid, findArrayPosition } from '../util/helpers';
-class TimerDashBoard extends React.Component {
+
+export default class TimerDashBoard extends React.Component {
   state = {
     timers: [
       {
@@ -24,6 +25,24 @@ class TimerDashBoard extends React.Component {
     ],
   }
   
+  handleCreateFormSubmit = (title, proj) => {
+    this.createTimer(title, proj)
+  }
+
+  handleEditFormSubmit = (title, proj, id) => {
+    this.editTimer(title, proj, id);
+  }
+
+  editTimer = (title, project, id) => {
+    const updatedTimers = this.state.timers.map((timer) => {
+      if (timer.id === id) {
+        return Object.assign({}, timer,{title, project})
+      } else {
+        return timer
+      }
+    })
+    this.setState({ timers: updatedTimers });
+  }
   recordPausedTime = (id) => {
     let position = findArrayPosition(id, this.state.timers);
     let updatedTimers = [...this.state.timers]
@@ -46,29 +65,14 @@ class TimerDashBoard extends React.Component {
   }
 
 
-  handleUpdate = (title, project, id) => {
-    if (title === '' && project === '') {
-      return
-    }
-    const updatedTimers = this.state.timers.map((timer) => {
-      if (timer.id === id) {
-        return Object.assign({}, timer,{title, project})
-      } else {
-        return timer
-      }
-    })
-    this.setState({ timers: updatedTimers });
-  }
+  
 
   handleDelete = (id) => {
     const updatedTimers = this.state.timers.filter((timer) => timer.id !== id);
     this.setState({ timers: updatedTimers });
   }
   
-  handleCreate = (title, project) => {
-    if (title === '' && project === '') {
-      return;
-    }
+  createTimer = (title, project) => {
     const newTimer = {title, project, id: uuid(), elapsed: null, runningSince: null, pausedTime: null};
     const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers: updatedTimers });
@@ -79,21 +83,19 @@ class TimerDashBoard extends React.Component {
     <div>
       <EditableTimerList 
         timers={this.state.timers}
-        handleUpdate={this.handleUpdate}
+        onFormSubmit={this.handleEditFormSubmit}
         delete={this.handleDelete}
         toggleTimer={this.handleToggleTimer}
         timerStartTime ={this.handleTimerStartTime}
         recordPaused={this.recordPausedTime}
       />
       <ToggleableTimerForm 
-        create={this.handleCreate}
+        onFormSubmit={this.handleCreateFormSubmit}
       />
     </div>
     );
   }
 }
-
-export default TimerDashBoard;
 
 
 

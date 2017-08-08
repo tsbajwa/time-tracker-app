@@ -2,7 +2,7 @@ import React from 'react';
 import TimerForm from './TimerForm';
 import toggleIcon from '../assets/toggle.png';
 
-class ToggleableTimerForm extends React.Component {
+export default class ToggleableTimerForm extends React.Component {
   state = {
     isFormOpen: false,
   }
@@ -17,8 +17,9 @@ class ToggleableTimerForm extends React.Component {
 
   handleFormSubmit = (title, proj) => {
     this.handleFormClose();
-    this.props.create(title, proj);
+    this.props.onFormSubmit(title, proj);
   }
+
   render() {
     if (this.state.isFormOpen) {
       return (
@@ -38,6 +39,5 @@ class ToggleableTimerForm extends React.Component {
   }
 }
 
-export default ToggleableTimerForm;
 
 

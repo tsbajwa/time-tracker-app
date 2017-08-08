@@ -4,7 +4,7 @@ import edit from '../assets/edit.png';
 import del from '../assets/del.png';
 import { msToTime } from '../util/helpers';
 
-class Timer extends React.Component {
+export default class Timer extends React.Component {
   state = {
     start: true,
   }
@@ -17,9 +17,9 @@ class Timer extends React.Component {
   }
 
   handleStopOnClick = () => {
-   this.setState({ start: true, });
-   clearInterval(this.toggleTimer);
-   this.props.recordPaused(this.props.id);
+    this.setState({ start: true, });
+    clearInterval(this.toggleTimer);
+    this.props.recordPaused(this.props.id);
   }
 
   render() {
@@ -47,5 +47,3 @@ class Timer extends React.Component {
     );
   }
 }
-
-export default Timer;

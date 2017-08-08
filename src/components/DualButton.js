@@ -1,6 +1,6 @@
 import React from 'react';
 
-class DualButton extends React.Component {
+export default class DualButton extends React.Component {
   render() {
     if (this.props.start) {
       return (
@@ -13,5 +13,3 @@ class DualButton extends React.Component {
     }
   }
 }
-
-export default DualButton;
