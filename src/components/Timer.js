@@ -6,21 +6,28 @@ import { msToTime } from '../util/helpers';
 
 export default class Timer extends React.Component {
   state = {
-    start: true,
+    timerRunning: true,
   }
 
   handleStartClick = (e) => {
-    this.setState({ start: false, })
+    this.timerOff()
     this.props.timerStartTime(this.props.id);
     this.refreshTimerDOM = setInterval(this.props.updateTime,1000,this.props.id);
   }
 
   handleStopClick = () => {
-    this.setState({ start: true, });
+    this.timerOn()
     clearInterval(this.refreshTimerDOM);
     this.props.recordPaused(this.props.id);
   }
 
+  timerOn = () => {
+    this.setState({ timerRunning: true, })
+  }
+
+  timerOff = () => {
+    this.setState({ timerRunning: false, })
+  }
   render() {
     return (
       <div className='timer'>
@@ -36,7 +43,7 @@ export default class Timer extends React.Component {
          <img src={del} onClick={() => this.props.iconTwoClick(this.props.id)} alt='Delete Timer' />
         </div>
         <DualButton
-          start={this.state.start}
+          start={this.state.timerRunning}
           startOnClick={this.handleStartClick}
           startBtnText='Start'
           stopOnClick={this.handleStopClick}
