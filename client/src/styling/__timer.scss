@@ -1,0 +1,28 @@
+.timer {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+
+  &__headings {
+    h1 {
+      line-height: 10%;
+    }
+
+    p {
+      line-height: 0;
+      color: grey;
+    }
+  }
+  &__time {
+    text-align: center;
+  }
+
+  &__editOptions {
+    align-self: flex-end;
+// Substitute Assets for Smaller pics
+    img {
+      height: auto;
+      max-width: 16px;
+    }
+  }
+}
