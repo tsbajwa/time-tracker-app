@@ -2,32 +2,23 @@ import React from 'react';
 import DualButton from './DualButton';
 import edit from '../assets/edit.png';
 import del from '../assets/del.png';
-import { msToTime } from '../util/helpers';
+import { renderTime } from '../util/helpers';
 
 export default class Timer extends React.Component {
-  state = {
-    timerRunning: true,
+  componentDidMount() {
+    this.refreshTimer = setInterval(() => this.forceUpdate(), 50);
   }
-
-  handleStartClick = (e) => {
-    this.timerOff()
-    this.props.timerStartTime(this.props.id);
-    this.refreshTimerDOM = setInterval(this.props.updateTime,1000,this.props.id);
+  componentWillUnmount = () => {
+    clearInterval(this.refreshTimer);
   }
 
   handleStopClick = () => {
-    this.timerOn()
-    clearInterval(this.refreshTimerDOM);
-    this.props.recordPaused(this.props.id);
+    this.props.onStopClick(this.props.id);
   }
-
-  timerOn = () => {
-    this.setState({ timerRunning: true, })
+  handleStartClick = () => {
+    this.props.onStartClick(this.props.id);
   }
-
-  timerOff = () => {
-    this.setState({ timerRunning: false, })
-  }
+  
   render() {
     return (
       <div className='timer'>
@@ -36,20 +27,21 @@ export default class Timer extends React.Component {
           <p>{this.props.project}</p>
         </div>
         <div className='timer__time'>
-         {msToTime(this.props.elapsed)}
+         {renderTime(this.props.elapsed, this.props.runningSince)}
         </div>
         <div className='timer__editOptions'>
          <img src={edit} onClick={this.props.iconOneClick} alt='Edit timer' />
          <img src={del} onClick={() => this.props.iconTwoClick(this.props.id)} alt='Delete Timer' />
         </div>
         <DualButton
-          start={this.state.timerRunning}
-          startOnClick={this.handleStartClick}
+          start={!!this.props.runningSince}
+          onStartClick={this.handleStartClick}
           startBtnText='Start'
-          stopOnClick={this.handleStopClick}
+          onStopClick={this.handleStopClick}
           stopBtnText='Stop'
           />
       </div>
     );
   }
 }
+

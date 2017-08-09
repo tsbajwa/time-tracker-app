@@ -10,17 +10,15 @@ export default class TimerDashBoard extends React.Component {
         title: 'Practice squat',
         project: 'Gym Chores',
         id: uuid(),
-        elapsed: null,
+        elapsed: 23432432424,
         runningSince: null,
-        pausedTime: null,
       }, 
       {
         title: 'Bake squash',
         project: 'Kitchen Chores',
         id: uuid(),
-        elapsed: null,
+        elapsed: 0,
         runningSince: null,
-        pausedTime: null,
       },
     ],
   }
@@ -34,7 +32,15 @@ export default class TimerDashBoard extends React.Component {
   }
 
   handleDeleteClick = (id) => {
-    this.deleteTimer(id)
+    this.deleteTimer(id);
+  }
+
+  handleStartClick = (id) => {
+    this.startTimer(id);
+  }
+
+  handleStopClick = (id) => {
+    this.stopTimer(id);
   }
 
   editTimer = (title, project, id) => {
@@ -57,37 +63,40 @@ export default class TimerDashBoard extends React.Component {
     const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers: updatedTimers });
   }
-
-  recordPausedTime = (id) => {
-    let position = findArrayPosition(id, this.state.timers);
-    let updatedTimers = [...this.state.timers]
-    updatedTimers[position].pausedTime = updatedTimers[position].elapsed;
-    this.setState({ timers: updatedTimers })
+  
+  startTimer = (id) => {
+    const updatedTimers = this.state.timers.map((timer) => {
+      if (timer.id === id) {
+        return Object.assign({}, timer,{runningSince: Date.now()})
+      } else {
+        return timer
+      }
+    })
+    this.setState({ timers: updatedTimers });
   }
 
-  handleTimerStartTime = (id) => {
-    let position = findArrayPosition(id, this.state.timers);
-    let updatedTimers = [...this.state.timers]
-      updatedTimers[position].runningSince = Date.now();
-      this.setState({ timers: updatedTimers }) 
+  stopTimer = (id) => {
+      const updatedTimers = this.state.timers.map((timer) => {
+      if (timer.id === id) {
+        const lastElapsed = Date.now() - timer.runningSince;
+        return Object.assign({}, timer,{elapsed: timer.elapsed + lastElapsed, runningSince: null})
+      } else {
+        return timer
+      }
+    })
+    this.setState({ timers: updatedTimers });
   }
 
-  handleUpdateTime = (id) => {
-      let position = findArrayPosition(id, this.state.timers)
-      let updatedTimers = [...this.state.timers]
-      updatedTimers[position].elapsed = updatedTimers[position].pausedTime + Date.now() - updatedTimers[position].runningSince;
-      this.setState({ timers: updatedTimers })
-  }
+
   render() {
     return (
     <div>
       <EditableTimerList 
         timers={this.state.timers}
         onFormSubmit={this.handleEditFormSubmit}
-        onClick={this.handleDeleteClick}
-        updateTime={this.handleUpdateTime}
-        timerStartTime ={this.handleTimerStartTime}
-        recordPaused={this.recordPausedTime}
+        onDeleteClick={this.handleDeleteClick}
+        onStartClick ={this.handleStartClick}
+        onStopClick={this.handleStopClick}
       />
       <ToggleableTimerForm 
         onFormSubmit={this.handleCreateFormSubmit}
