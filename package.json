@@ -1,0 +1,23 @@
+{
+  "name": "time-tracker",
+  "version": "1.0.0",
+  "description": "A timer app built with React, using Create-React-App. CRUD functionality",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsbajwa/time-tracker-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tsbajwa/time-tracker-app/issues"
+  },
+  "homepage": "https://github.com/tsbajwa/time-tracker-app#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
