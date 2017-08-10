@@ -55,7 +55,8 @@ export default class TimerDashBoard extends React.Component {
   }
 
   deleteTimer = (id) => {
-    this.setState({ timers: this.state.timers.filter((timer) => timer.id !== id)});
+    console.log('clicked')
+    this.setState({ timers: this.state.timers.filter((timer) => timer.id !== id) });
   }
   
   createTimer = (title, project) => {

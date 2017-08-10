@@ -49,7 +49,7 @@ export default class EditableTimer extends React.Component {
         iconOneClick={this.handleIconOneClick}
         onStartClick={this.props.onStartClick}
         onStopClick={this.props.onStopClick}
-        iconTwoClick={this.props.ondeleteClick}
+        iconTwoClick={this.props.onDeleteClick}
         />
       );
     }
