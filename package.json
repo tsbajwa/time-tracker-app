@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server.js",
+    "server": "nodemon server.js",
     "start": "concurrently \"npm run server\" \"cd client && npm start\""
   },
   "repository": {
@@ -23,5 +23,8 @@
     "concurrently": "^3.5.0",
     "express": "^4.15.4",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
