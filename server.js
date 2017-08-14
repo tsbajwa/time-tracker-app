@@ -24,13 +24,86 @@ app.use((req, res, next) => {
 });
 //End Middleware
 
-//app.get(path, callback, [callback]) req = requested data res = repsonse sent back
+//Get timers
 app.get('/api/timers', (req, res) => {
-  fs.readFile(DATA_FILE, (err, data) => {       //file path,callback. Two arguments (err, data). data is the contents of the file
+  fs.readFile(DATA_FILE, (err, data) => {
     res.setHeader('Cache-Control', 'no-cache');
-    res.json(JSON.parse(data));                         //res.json same as res.send, but repsects more of the JSON formatting
+    res.json(JSON.parse(data));
+  })
+})
+//Add new timer
+app.post('/api/timers', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const currentTimers = JSON.parse(data);
+    const newTimer = { 
+      title: req.body.title,
+      project: req.body.project,
+      id: req.body.id,
+      elapsed: 0,
+      runningSince: null,
+    };
+    const timers = JSON.stringify(currentTimers.push(newTimer));
+    fs.writeFile(DATA_FILE, timers, () => {
+      res.setHeader('Cache-Control', 'no-cache');
+      res.json(timers)                                  //Why is this response required?
+    })
+  })
+})
+//Delete a timer
+app.delete('api/timers', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const currentTimers = JSON.parse(data);
+    const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
+    fs.writeFile(DATA_FILE, timers, () => {
+      res.json({});
+    })
+  })
+})
+//update timer
+app.post('api/timers', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const currentTimers = JSON.parse(data);
+    const timers = currentTimers.forEach((timer) => {
+      if (timer.id === req.body.id) {
+        timer.title = req.body.title;
+        timer.project = req.body.project;
+      }
+    })
+    fs.writeFile(DATA_FILE, JSON.stringify(timers), () => {
+      res.json({})
+    })
+  })
+})
+app.post('/api/timers/start', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const timers = JSON.parse(data);
+    timers.forEach((timer) => {
+      if (timer.id === req.body.id) {
+        timer.runningSince = req.body.start;
+      }
+    });
+    fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
+      res.json({});
+    });
   });
 });
+
+app.post('/api/timers/stop', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    const timers = JSON.parse(data);
+    timers.forEach((timer) => {
+      if (timer.id === req.body.id) {
+        const delta = req.body.stop - timer.runningSince;
+        timer.elapsed += delta;
+        timer.runningSince = null;
+      }
+    });
+    fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
+      res.json({});
+    });
+  });
+});
+
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
