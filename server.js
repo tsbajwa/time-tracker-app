@@ -1,7 +1,9 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-fs = require('fs');
+//require('babel-register') //Not required. Verify
+
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import fs from 'fs';
 
 const app = express();
 
@@ -22,16 +24,15 @@ app.use((req, res, next) => {
 });
 //End Middleware
 
-//app.get(path, callback, [callback])
-//req = is the requested data
-//resp = sending back repsonse
+//app.get(path, callback, [callback]) req = requested data res = repsonse sent back
 app.get('/api/timers', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {       //file path,callback. Two arguments (err, data). data is the contents of the file
     res.setHeader('Cache-Control', 'no-cache');
-    res.json(JSON.parse(data));                         //basically gets data from file and sends parsed data as response
+    res.json(JSON.parse(data));                         //res.json same as res.send, but repsects more of the JSON formatting
   });
 });
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
+
