@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/tsbajwa/time-tracker-app#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "concurrently": "^3.5.0",
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "path": "^0.12.7"
   }
 }
