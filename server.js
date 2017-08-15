@@ -34,7 +34,7 @@ app.get('/api/timers', (req, res) => {
 //Add new timer
 app.post('/api/timers', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
-    const currentTimers = JSON.parse(data);
+    const timers = JSON.parse(data);
     const newTimer = { 
       title: req.body.title,
       project: req.body.project,
@@ -42,28 +42,44 @@ app.post('/api/timers', (req, res) => {
       elapsed: 0,
       runningSince: null,
     };
-    const timers = JSON.stringify(currentTimers.push(newTimer));
-    fs.writeFile(DATA_FILE, timers, () => {
+    timers.push(newTimer);
+    fs.writeFile(DATA_FILE, JSON.stringify(timers), () => {
       res.setHeader('Cache-Control', 'no-cache');
       res.json(timers)                                  //Why is this response required?
     })
   })
 })
+
+app.delete('/api/timers', (req, res) => {
+  fs.readFile(DATA_FILE, (err, data) => {
+    let timers = JSON.parse(data);
+    timers = timers.reduce((memo, timer) => {
+      if (timer.id === req.body.id) {
+        return memo;
+      } else {
+        return memo.concat(timer);
+      }
+    }, []);
+    fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
+      res.json({});
+    });
+  });
+});
 //Delete a timer
-app.delete('api/timers', (req, res) => {
-  fs.readFile(DATA_FILE, (err, data) => {
-    const currentTimers = JSON.parse(data);
-    const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
-    fs.writeFile(DATA_FILE, timers, () => {
-      res.json({});       //With fetch exception thrown if server responds success no content, so need to send back empty data
-    })
-  })
-})
+// app.delete('api/timers', (req, res) => {
+//   fs.readFile(DATA_FILE, (err, data) => {
+//     const currentTimers = JSON.parse(data);
+//     const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
+//     fs.writeFile(DATA_FILE, timers, () => {
+//       res.json({});       //With fetch exception thrown if server responds success no content, so need to send back empty data
+//     })
+//   })
+// })
 //update timer
-app.post('api/timers', (req, res) => {
+app.put('/api/timers', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
-    const currentTimers = JSON.parse(data);
-    const timers = currentTimers.forEach((timer) => {
+    const timers = JSON.parse(data);
+    timers.forEach((timer) => {
       if (timer.id === req.body.id) {
         timer.title = req.body.title;
         timer.project = req.body.project;

@@ -2,7 +2,7 @@ import React from 'react'
 import EditableTimerList from './EditableTimerList';
 import ToggleableTimerForm from './ToggleableTimerForm';
 import { uuid } from '../util/helpers';
-import { getTimers, createTimer, startTimer, stopTimer, deleteTimer, updatedTimer } from '../util/client';
+import { clientGetTimers, clientCreateTimer, clientStartTimer, clientStopTimer, clientDeleteTimer, clientUpdateTimer } from '../util/client';
 
 export default class TimerDashBoard extends React.Component {
   state = {
@@ -11,10 +11,11 @@ export default class TimerDashBoard extends React.Component {
   
   componentDidMount() {
     this.loadTimersfromServer();
+    setInterval(this.loadTimersfromServer, 6000) //Hard refresh every 6 seconds. Look into long polling later.
   }
 
   loadTimersfromServer = () => {
-   getTimers((serverTimers) => {
+   clientGetTimers((serverTimers) => {
     this.setState({ timers: serverTimers })
    })
   }
@@ -47,40 +48,48 @@ export default class TimerDashBoard extends React.Component {
       }
     })
     this.setState({ timers: updatedTimers });
+    clientUpdateTimer({ id, title, project });
   }
 
   deleteTimer = (id) => {
     console.log('clicked')
     this.setState({ timers: this.state.timers.filter((timer) => timer.id !== id) });
+    clientDeleteTimer({ id: id });
   }
   
   createTimer = (title, project) => {
-    const newTimer = {title, project, id: uuid(), elapsed: null, runningSince: null, pausedTime: null};
+    const id = uuid();
+    const newTimer = {title, project, id, elapsed: null, runningSince: null, pausedTime: null};
     const updatedTimers = [...this.state.timers, newTimer]
     this.setState({ timers: updatedTimers });
+    clientCreateTimer({ id, title, project });
   }
   
   startTimer = (id) => {
+    let timeNow = Date.now();
     const updatedTimers = this.state.timers.map((timer) => {
       if (timer.id === id) {
-        return Object.assign({}, timer,{runningSince: Date.now()})
+        return Object.assign({}, timer,{ runningSince: timeNow })
       } else {
         return timer
       }
     })
     this.setState({ timers: updatedTimers });
+    clientStartTimer({id, start: timeNow })
   }
 
   stopTimer = (id) => {
+    let timeNow = Date.now();
       const updatedTimers = this.state.timers.map((timer) => {
       if (timer.id === id) {
-        const lastElapsed = Date.now() - timer.runningSince;
-        return Object.assign({}, timer,{elapsed: timer.elapsed + lastElapsed, runningSince: null})
+        const lastElapsed = timeNow - timer.runningSince;
+        return Object.assign({}, timer,{ elapsed: timer.elapsed + lastElapsed, runningSince: null })
       } else {
         return timer
       }
     })
     this.setState({ timers: updatedTimers });
+    clientStopTimer({ id, stop: timeNow })
   }
 
 

@@ -1,6 +1,6 @@
 //FETCH
 
-export function getTimers(success) {
+export function clientGetTimers(success) {
   return fetch('/api/timers', {
     headers: {
       Accept: 'application/json'
@@ -10,7 +10,7 @@ export function getTimers(success) {
     .then(success)
 }
 
-export function createTimer(data) {
+export function clientCreateTimer(data) {
   return fetch('api/timers', {
     method: 'post',
     body: JSON.stringify(data),
@@ -21,7 +21,7 @@ export function createTimer(data) {
   }).then(checkStatus)
 }
 
-export function startTimer(data) {
+export function clientStartTimer(data) {
   return fetch('/api/timers/start', {
     method:'post',
     body: JSON.stringify(data),
@@ -32,7 +32,7 @@ export function startTimer(data) {
   }).then(checkStatus);
 }
 
-export function stopTimer(data) {
+export function clientStopTimer(data) {
   return fetch('/api/timers/stop', {
     method: 'post',
     body: JSON.stringify(data),
@@ -43,7 +43,7 @@ export function stopTimer(data) {
   }).then(checkStatus);
 }
 
-export function deleteTimer(data) {
+export function clientDeleteTimer(data) {
   return fetch('/api/timers', {
     method: 'delete',
     body: JSON.stringify(data),
@@ -53,8 +53,7 @@ export function deleteTimer(data) {
     },
   }).then(checkStatus);
 }
-
-export function updateTimer(data) {
+export function clientUpdateTimer(data) {
   return fetch('/api/timers', {
     method: 'put',
     body: JSON.stringify(data),
@@ -64,6 +63,16 @@ export function updateTimer(data) {
     },
   }).then(checkStatus);
 }
+// export function clientUpdateTimer(data) {
+//   return fetch('/api/timers', {
+//     method: 'put',
+//     body: JSON.stringify(data),
+//     headers: {
+//       'Accept': 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//   }).then(checkStatus);
+// }
 
 
 
