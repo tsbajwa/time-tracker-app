@@ -1,28 +1,23 @@
 import React from 'react'
 import EditableTimerList from './EditableTimerList';
 import ToggleableTimerForm from './ToggleableTimerForm';
-import { uuid, findArrayPosition } from '../util/helpers';
+import { uuid } from '../util/helpers';
+import { getTimers, createTimer, startTimer, stopTimer, deleteTimer, updatedTimer } from '../util/client';
 
 export default class TimerDashBoard extends React.Component {
   state = {
-    timers: [
-      {
-        title: 'Practice squat',
-        project: 'Gym Chores',
-        id: uuid(),
-        elapsed: 23432432424,
-        runningSince: null,
-      }, 
-      {
-        title: 'Bake squash',
-        project: 'Kitchen Chores',
-        id: uuid(),
-        elapsed: 0,
-        runningSince: null,
-      },
-    ],
+    timers: [],
   }
   
+  componentDidMount() {
+    this.loadTimersfromServer();
+  }
+
+  loadTimersfromServer = () => {
+   getTimers((serverTimers) => {
+    this.setState({ timers: serverTimers })
+   })
+  }
   handleCreateFormSubmit = (title, proj) => {
     this.createTimer(title, proj)
   }
