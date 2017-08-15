@@ -55,7 +55,7 @@ app.delete('api/timers', (req, res) => {
     const currentTimers = JSON.parse(data);
     const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
     fs.writeFile(DATA_FILE, timers, () => {
-      res.json({});
+      res.json({});       //With fetch exception thrown if server responds success no content, so need to send back empty data
     })
   })
 })
