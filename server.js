@@ -42,7 +42,7 @@ app.post('/api/timers', (req, res) => {
       runningSince: null,
     };
     timers.push(newTimer);
-    fs.writeFile(DATA_FILE, JSON.stringify(timers), () => {
+    fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
       res.setHeader('Cache-Control', 'no-cache');
       res.json({})                                 
     })
@@ -70,7 +70,7 @@ app.put('/api/timers', (req, res) => {
         timer.project = req.body.project;
       }
     })
-    fs.writeFile(DATA_FILE, JSON.stringify(timers), () => {
+    fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
       res.json({})
     })
   })
