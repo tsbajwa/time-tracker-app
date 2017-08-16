@@ -20,16 +20,16 @@ p {
   line-height: 20px;
 }
 
-//timer 24px
+#root {
+  display: flex;
+  justify-content: center;
+}
 
-//blue #2185d0
-
-//box: padding 14 290px wide
-
-//16 by 14 icons
-
-
-//Ediform titles; 13px line-height 
-//input 14px 17 line-height
-
-//red button colour: d01919
+button {
+  display: inline-block;
+  padding: 5px 45px;
+  font-size: 15px;
+  line-height: 1.5;
+  background: white;
+  border: solid 5px;
+}

@@ -1,0 +1,36 @@
+.timerForm {
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  
+  padding:0 10px 0 10px;
+  border: solid lightgray;
+  border-radius: 5px;
+  &__headingContainer {
+    p {
+      font-size: 18px;
+      line-height: 0px;
+    }
+  }
+  &__input {
+    width: calc( 100% - 4px);
+    padding-top: 5px;
+    font-size: 16px;
+  }
+  &__btnContainer {
+    margin-top: 15px;
+  }
+
+  &__btn {
+    border: solid 2px;
+    &--blue {
+      color: #0E0E91;
+    }
+    &--red {
+      color: #B10707
+    }
+    
+  }
+}

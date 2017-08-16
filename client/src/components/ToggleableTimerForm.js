@@ -23,15 +23,17 @@ export default class ToggleableTimerForm extends React.Component {
   render() {
     if (this.state.isFormOpen) {
       return (
-        <TimerForm
-        btnText='Create'
-        onFormClose={this.handleFormClose}
-        onFormSubmit={this.handleFormSubmit}
-        />
+        <div className="toggleableTimerForm">
+          <TimerForm
+          btnText='Create'
+          onFormClose={this.handleFormClose}
+          onFormSubmit={this.handleFormSubmit}
+          />
+        </div>
       );
     } else {
       return (
-        <div>
+        <div className='toggleableTimerForm'>
           <img src={toggleIcon} onClick={this.handleFormOpen} alt="Add timer" />
         </div>
       )

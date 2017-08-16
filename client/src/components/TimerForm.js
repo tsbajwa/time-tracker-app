@@ -23,21 +23,23 @@ export default class TimerForm extends React.Component {
   render() {
     const btnValue = this.props.id ? 'Update' : 'Create';
     return (
-      <div>
-        <div>
+      <div className="timerForm">
+        <div className="timerForm__headingContainer">
           <p>Title</p>
-          <input type='text'  value={this.state.title} onChange={this.handleTitleChange}/>
+          <input className="timerForm__input" type='text'  value={this.state.title} onChange={this.handleTitleChange}/>
           <p>Project</p>
-          <input type='text' value={this.state.project} onChange={this.handleProjectChange}/>
+          <input className="timerForm__input" type='text' value={this.state.project} onChange={this.handleProjectChange}/>
         </div>
-        <div>
+        <div className="timerForm__btnContainer">
           <Button 
           btnText= {btnValue}
           onClick={this.handleSubmit}
+          className='timerForm__btn timerForm__btn--blue'
           />
           <Button 
           btnText='Cancel'
           onClick={this.props.onFormClose}
+          className='timerForm__btn timerForm__btn--red'
           />
         </div>
       </div>
