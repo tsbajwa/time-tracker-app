@@ -32,4 +32,8 @@ button {
   line-height: 1.5;
   background: white;
   border: solid 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

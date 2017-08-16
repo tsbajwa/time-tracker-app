@@ -29,9 +29,9 @@ export default class Timer extends React.Component {
         <div className='timer__time'>
          {renderTime(this.props.elapsed, this.props.runningSince)}
         </div>
-        <div className='timer__editOptions'>
-         <img src={edit} onClick={this.props.iconOneClick} alt='Edit timer' />
-         <img src={del} onClick={() => this.props.iconTwoClick(this.props.id)} alt='Delete Timer' />
+        <div className='timer__editOptionsContainer'>
+         <img className='timer__edit'src={edit} onClick={this.props.iconOneClick} alt='Edit timer' />
+         <img className='timer__del'src={del} onClick={() => this.props.iconTwoClick(this.props.id)} alt='Delete Timer' />
         </div>
         <DualButton
           start={!!this.props.runningSince}
