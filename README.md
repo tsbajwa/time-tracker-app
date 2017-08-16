@@ -1,7 +1,13 @@
 ## React Timer App
 
-A timer app built with React, using Create-React-App. CRUD functionality
+A timer app built with React, express server and fetch API. 
+### To use application:
 
-### How to open
+Open terminal.
+* If this is your first time runnung the application, run 'npm install' first.
+* To start the application run 'npm run start'
+* Website will open on http://localhost:3000
+* Server will open on http://localhost:3001
 
-Instructions to come...
+ ### Data Storage
+ Data is stored in data.json file located in root directory. 
