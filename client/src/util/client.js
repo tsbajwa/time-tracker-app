@@ -63,18 +63,6 @@ export function clientUpdateTimer(data) {
     },
   }).then(checkStatus);
 }
-// export function clientUpdateTimer(data) {
-//   return fetch('/api/timers', {
-//     method: 'put',
-//     body: JSON.stringify(data),
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json',
-//     },
-//   }).then(checkStatus);
-// }
-
-
 
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {

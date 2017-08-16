@@ -1,4 +1,3 @@
-//require('babel-register') //Not required. Verify
 
 import express from 'express';
 import path from 'path';
@@ -45,37 +44,23 @@ app.post('/api/timers', (req, res) => {
     timers.push(newTimer);
     fs.writeFile(DATA_FILE, JSON.stringify(timers), () => {
       res.setHeader('Cache-Control', 'no-cache');
-      res.json(timers)                                  //Why is this response required?
+      res.json({})                                 
     })
   })
 })
 
+//Timer Deleted
 app.delete('/api/timers', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
-    let timers = JSON.parse(data);
-    timers = timers.reduce((memo, timer) => {
-      if (timer.id === req.body.id) {
-        return memo;
-      } else {
-        return memo.concat(timer);
-      }
-    }, []);
+    const currentTimers = JSON.parse(data);
+    const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
     fs.writeFile(DATA_FILE, JSON.stringify(timers, null, 4), () => {
-      res.json({});
-    });
-  });
-});
-//Delete a timer
-// app.delete('api/timers', (req, res) => {
-//   fs.readFile(DATA_FILE, (err, data) => {
-//     const currentTimers = JSON.parse(data);
-//     const timers = currentTimers.filter((timer) => req.body.id !== timer.id);
-//     fs.writeFile(DATA_FILE, timers, () => {
-//       res.json({});       //With fetch exception thrown if server responds success no content, so need to send back empty data
-//     })
-//   })
-// })
-//update timer
+      res.json({});       //With fetch exception thrown if server responds success no content, so need to send back empty data
+    })
+  })
+})
+
+// Timer updated
 app.put('/api/timers', (req, res) => {
   fs.readFile(DATA_FILE, (err, data) => {
     const timers = JSON.parse(data);
